@@ -1,0 +1,6 @@
+*.pyc
+*.DS_Store
+*~
+*.flv
+local_settings.py
+
