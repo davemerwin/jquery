@@ -56,27 +56,27 @@ test("selector state", function() {
 	expect(28);
 
 	var test;
-	
+
 	test = jQuery();
 	equals( test.selector, "", "Empty jQuery Selector" );
 	equals( test.context, document, "Empty jQuery Context" );
-	
+
 	test = jQuery(document);
 	equals( test.selector, "", "Document Selector" );
 	equals( test.context, document, "Document Context" );
-	
+
 	test = jQuery(document.body);
 	equals( test.selector, "", "Body Selector" );
 	equals( test.context, document.body, "Body Context" );
-	
+
 	test = jQuery("#main");
 	equals( test.selector, "#main", "#main Selector" );
 	equals( test.context, document, "#main Context" );
-	
+
 	test = jQuery("#main", document);
 	equals( test.selector, "#main", "#main Selector" );
 	equals( test.context, document, "#main Context" );
-	
+
 	test = jQuery("#main", document.body);
 	equals( test.selector, "#main", "#main Selector" );
 	equals( test.context, document.body, "#main Context" );
@@ -85,7 +85,7 @@ test("selector state", function() {
 	test = jQuery(test);
 	equals( test.selector, "#main", "#main Selector" );
 	equals( test.context, document.body, "#main Context" );
-	
+
 	test = jQuery(document.body).find("#main");
 	equals( test.selector, "#main", "#main find Selector" );
 	equals( test.context, document.body, "#main find Context" );
@@ -93,23 +93,23 @@ test("selector state", function() {
 	test = jQuery("#main").filter("div");
 	equals( test.selector, "#main.filter(div)", "#main filter Selector" );
 	equals( test.context, document, "#main filter Context" );
-	
+
 	test = jQuery("#main").not("div");
 	equals( test.selector, "#main.not(div)", "#main not Selector" );
 	equals( test.context, document, "#main not Context" );
-	
+
 	test = jQuery("#main").filter("div").not("div");
 	equals( test.selector, "#main.filter(div).not(div)", "#main filter, not Selector" );
 	equals( test.context, document, "#main filter, not Context" );
-	
+
 	test = jQuery("#main").filter("div").not("div").end();
 	equals( test.selector, "#main.filter(div)", "#main filter, not, end Selector" );
 	equals( test.context, document, "#main filter, not, end Context" );
-	
+
 	test = jQuery("#main").parent("body");
 	equals( test.selector, "#main.parent(body)", "#main parent Selector" );
 	equals( test.context, document, "#main parent Context" );
-	
+
 	test = jQuery("#main").eq(0);
 	equals( test.selector, "#main.slice(0,1)", "#main eq Selector" );
 	equals( test.context, document, "#main eq Context" );
@@ -415,19 +415,19 @@ test("attr(String)", function() {
 
 	ok( $body.attr('foo') === undefined, 'Make sure that a non existent attribute returns undefined' );
 	ok( $body.attr('nextSibling') === null, 'Make sure a null expando returns null' );
-	
+
 	body.setAttribute('foo', 'baz');
 	equals( $body.attr('foo'), 'baz', 'Make sure the dom attribute is retrieved when no expando is found' );
-	
+
 	body.foo = 'bar';
 	equals( $body.attr('foo'), 'bar', 'Make sure the expando is preferred over the dom attribute' );
-	
+
 	$body.attr('foo','cool');
 	equals( $body.attr('foo'), 'cool', 'Make sure that setting works well when both expando and dom attribute are available' );
-	
+
 	body.foo = undefined;
 	ok( $body.attr('foo') === undefined, 'Make sure the expando is preferred over the dom attribute, even if undefined' );
-	
+
 	body.removeAttribute('foo'); // Cleanup
 });
 
@@ -523,7 +523,7 @@ test("attr(String, Object)", function() {
 	}
 	ok( thrown, "Exception thrown when trying to change type property" );
 	equals( "checkbox", jQuery(check).attr('type'), "Verify that you can change the type of an input element that isn't in the DOM" );
-	
+
 	var check = jQuery("<input />");
 	var thrown = true;
 	try {
@@ -587,7 +587,7 @@ test("attr('tabindex', value)", function() {
 	// set a negative string
 	element.attr('tabindex', '-1');
 	equals(element.attr('tabindex'), -1, 'set tabindex to -1 (string)');
-	
+
 	// set a positive number
 	element.attr('tabindex', 1);
 	equals(element.attr('tabindex'), 1, 'set tabindex to 1 (number)');
@@ -599,7 +599,7 @@ test("attr('tabindex', value)", function() {
 	// set a negative number
 	element.attr('tabindex', -1);
 	equals(element.attr('tabindex'), -1, 'set tabindex to -1 (number)');
-	
+
 	element = jQuery('#linkWithTabIndex');
 	equals(element.attr('tabindex'), 2, 'start with tabindex 2');
 
@@ -1226,17 +1226,17 @@ test("is(String)", function() {
 
 test("jQuery.merge()", function() {
 	expect(6);
-		
+
 	var parse = jQuery.merge;
-	
+
 	same( parse([],[]), [], "Empty arrays" );
-	
+
 	same( parse([1],[2]), [1,2], "Basic" );
 	same( parse([1,2],[3,4]), [1,2,3,4], "Basic" );
-	
+
 	same( parse([1,2],[]), [1,2], "Second empty" );
-	same( parse([],[1,2]), [1,2], "First empty" );	
-	
+	same( parse([],[1,2]), [1,2], "First empty" );
+
 	// Fixed at [5998], #3641
 	same( parse([-2,-1], [0,1,2]), [-2,-1,0,1,2], "Second array including a zero (falsy)");
 });
@@ -1321,27 +1321,27 @@ test("val()", function() {
 	// ticket #1714 this caused a JS error in IE
 	equals( jQuery("#first").val(), "", "Check a paragraph element to see if it has a value" );
 	ok( jQuery([]).val() === undefined, "Check an empty jQuery object will return undefined from val" );
-	
+
 	equals( jQuery('#select2').val(), '3', 'Call val() on a single="single" select' );
 
 	isSet( jQuery('#select3').val(), ['1', '2'], 'Call val() on a multiple="multiple" select' );
 
 	equals( jQuery('#option3c').val(), '2', 'Call val() on a option element with value' );
-	
+
 	equals( jQuery('#option3a').val(), '', 'Call val() on a option element with empty value' );
-	
+
 	equals( jQuery('#option3e').val(), 'no value', 'Call val() on a option element with no value attribute' );
-	
+
 });
 
 test("val(String/Number)", function() {
 	expect(6);
 	document.getElementById('text1').value = "bla";
 	equals( jQuery("#text1").val(), "bla", "Check for modified value of input element" );
-	
+
 	jQuery("#text1").val('test');
 	equals( document.getElementById('text1').value, "test", "Check for modified (via val(String)) value of input element" );
-	
+
 	jQuery("#text1").val(67);
 	equals( document.getElementById('text1').value, "67", "Check for modified (via val(Number)) value of input element" );
 
@@ -1360,9 +1360,9 @@ test("val(String/Number)", function() {
 
 test("html(String)", function() {
 	expect(17);
-	
+
 	jQuery.scriptorder = 0;
-	
+
 	var div = jQuery("#main > div");
 	div.html("<b>test</b>");
 	var pass = true;
@@ -1443,7 +1443,7 @@ test("not()", function() {
 
 	isSet( jQuery('#ap *').not('code'), q("google", "groups", "anchor1", "mark"), "not('tag selector')" );
 	isSet( jQuery('#ap *').not('code, #mark'), q("google", "groups", "anchor1"), "not('tag, ID selector')" );
-	isSet( jQuery('#ap *').not('#mark, code'), q("google", "groups", "anchor1"), "not('ID, tag selector')"); 
+	isSet( jQuery('#ap *').not('#mark, code'), q("google", "groups", "anchor1"), "not('ID, tag selector')");
 });
 
 test("andSelf()", function() {
@@ -1555,22 +1555,22 @@ test("addClass(String)", function() {
 
 test("removeClass(String) - simple", function() {
 	expect(4);
-	
+
 	var $divs = jQuery('div');
-	
+
 	$divs.addClass("test").removeClass("test");
-		
+
 	ok( !$divs.is('.test'), "Remove Class" );
 
 	reset();
-	
+
 	$divs.addClass("test").addClass("foo").addClass("bar");
 	$divs.removeClass("test").removeClass("bar").removeClass("foo");
-	
+
 	ok( !$divs.is('.test,.bar,.foo'), "Remove multiple classes" );
 
 	reset();
-	
+
 	$divs.eq(0).addClass("test").removeClass("");
 	ok( $divs.eq(0).is('.test'), "Empty string passed to removeClass" );
 
@@ -1696,16 +1696,16 @@ test("empty()", function() {
 
 test("slice()", function() {
 	expect(6);
-	
+
 	var $links = jQuery("#ap a");
-	
+
 	isSet( $links.slice(1,2), q("groups"), "slice(1,2)" );
 	isSet( $links.slice(1), q("groups", "anchor1", "mark"), "slice(1)" );
 	isSet( $links.slice(0,3), q("google", "groups", "anchor1"), "slice(0,3)" );
 	isSet( $links.slice(-1), q("mark"), "slice(-1)" );
 
 	isSet( $links.eq(1), q("groups"), "eq(1)" );
-	
+
 	isSet( $links.eq('2'), q("anchor1"), "eq('2')" );
 });
 
@@ -1816,7 +1816,7 @@ test("jQuery.makeArray", function(){
 
 	// function, is tricky as it has length
 	equals( jQuery.makeArray( function(){ return 1;} )[0](), 1, "Pass makeArray a function" );
-	
+
 	//window, also has length
 	equals( jQuery.makeArray(window)[0], window, "Pass makeArray the window" );
 

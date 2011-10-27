@@ -48,7 +48,7 @@ test("bind(), no data", function() {
 test("bind(), iframes", function() {
 	// events don't work with iframes, see #939 - this test fails in IE because of contentDocument
 	// var doc = document.getElementById("iframe").contentDocument;
-	// 
+	//
 	// doc.body.innerHTML = "<input type='text'/>";
 	//
 	// var input = doc.getElementsByTagName("input")[0];
@@ -114,7 +114,7 @@ test("bind(), namespaced events, cloned events", function() {
 
 test("bind(), multi-namespaced events", function() {
 	expect(6);
-	
+
 	var order = [
 		"click.test.abc",
 		"click.test.abc",
@@ -123,7 +123,7 @@ test("bind(), multi-namespaced events", function() {
 		"click.test",
 		"custom.test2"
 	];
-	
+
 	function check(name, msg){
 		same(name, order.shift(), msg);
 	}
@@ -168,23 +168,23 @@ test("bind(), multi-namespaced events", function() {
 
 test("unbind(type)", function() {
 	expect( 0 );
-	
+
 	var $elem = jQuery("#firstp"),
 		message;
 
 	function error(){
 		ok( false, message );
 	}
-	
+
 	message = "unbind passing function";
 	$elem.bind('error', error).unbind('error',error).triggerHandler('error');
-	
+
 	message = "unbind all from event";
 	$elem.bind('error', error).unbind('error').triggerHandler('error');
-	
+
 	message = "unbind all";
 	$elem.bind('error', error).unbind().triggerHandler('error');
-	
+
 	message = "unbind many with function";
 	$elem.bind('error error2',error)
 		 .unbind('error error2', error )
@@ -198,7 +198,7 @@ test("unbind(type)", function() {
 
 test("unbind(eventObject)", function() {
 	expect(4);
-	
+
 	var $elem = jQuery("#firstp"),
 		num;
 
@@ -207,7 +207,7 @@ test("unbind(eventObject)", function() {
 		$elem.trigger('foo').triggerHandler('bar');
 		equals( num, expected, "Check the right handlers are triggered" );
 	}
-	
+
 	$elem
 		// This handler shouldn't be unbound
 		.bind('foo', function(){
@@ -221,14 +221,14 @@ test("unbind(eventObject)", function() {
 		.bind('bar', function(){
 			num += 4;
 		});
-		
+
 	assert( 7 );
 	assert( 5 );
-	
+
 	$elem.unbind('bar');
 	assert( 1 );
-	
-	$elem.unbind();	
+
+	$elem.unbind();
 	assert( 0 );
 });
 
@@ -240,25 +240,25 @@ test("trigger() shortcuts", function() {
 		ok( !close[0], "Context element does not exist, direct access to element must return undefined" );
 		return false;
 	}).click();
-	
+
 	jQuery("#check1").click(function() {
 		ok( true, "click event handler for checkbox gets fired twice, see #815" );
 	}).click();
-	
+
 	var counter = 0;
 	jQuery('#firstp')[0].onclick = function(event) {
 		counter++;
 	};
 	jQuery('#firstp').click();
 	equals( counter, 1, "Check that click, triggers onclick event handler also" );
-	
+
 	var clickCounter = 0;
 	jQuery('#simon1')[0].onclick = function(event) {
 		clickCounter++;
 	};
 	jQuery('#simon1').click();
 	equals( clickCounter, 1, "Check that click, triggers onclick event handler on an a tag also" );
-	
+
 	jQuery('<img />').load(function(){
 		ok( true, "Trigger the load event, using the shortcut .load() (#2819)");
 	}).load();
@@ -340,28 +340,28 @@ test("trigger(type, [data], [fn])", function() {
 
 test("trigger(eventObject, [data], [fn])", function() {
 	expect(25);
-	
+
 	var $parent = jQuery('<div id="par" />').hide().appendTo('body'),
 		$child = jQuery('<p id="child">foo</p>').appendTo( $parent );
-	
-	var event = jQuery.Event("noNew");	
+
+	var event = jQuery.Event("noNew");
 	ok( event != window, "Instantiate jQuery.Event without the 'new' keyword" );
 	equals( event.type, "noNew", "Verify its type" );
-	
+
 	equals( event.isDefaultPrevented(), false, "Verify isDefaultPrevented" );
 	equals( event.isPropagationStopped(), false, "Verify isPropagationStopped" );
 	equals( event.isImmediatePropagationStopped(), false, "Verify isImmediatePropagationStopped" );
-	
+
 	event.preventDefault();
 	equals( event.isDefaultPrevented(), true, "Verify isDefaultPrevented" );
 	event.stopPropagation();
 	equals( event.isPropagationStopped(), true, "Verify isPropagationStopped" );
-	
+
 	event.isPropagationStopped = function(){ return false };
 	event.stopImmediatePropagation();
 	equals( event.isPropagationStopped(), true, "Verify isPropagationStopped" );
 	equals( event.isImmediatePropagationStopped(), true, "Verify isPropagationStopped" );
-	
+
 	$parent.bind('foo',function(e){
 		// Tries bubbling
 		equals( e.type, 'foo', 'Verify event type when passed passing an event object' );
@@ -369,57 +369,57 @@ test("trigger(eventObject, [data], [fn])", function() {
 		equals( e.currentTarget.id, 'par', 'Verify event.target when passed passing an event object' );
 		equals( e.secret, 'boo!', 'Verify event object\'s custom attribute when passed passing an event object' );
 	});
-	
+
 	// test with an event object
 	event = new jQuery.Event("foo");
 	event.secret = 'boo!';
 	$child.trigger(event);
-	
+
 	// test with a literal object
 	$child.trigger({type:'foo', secret:'boo!'});
-	
+
 	$parent.unbind();
 
 	function error(){
 		ok( false, "This assertion shouldn't be reached");
 	}
-	
+
 	$parent.bind('foo', error );
-	
+
 	$child.bind('foo',function(e, a, b, c ){
 		equals( arguments.length, 4, "Check arguments length");
 		equals( a, 1, "Check first custom argument");
 		equals( b, 2, "Check second custom argument");
 		equals( c, 3, "Check third custom argument");
-		
+
 		equals( e.isDefaultPrevented(), false, "Verify isDefaultPrevented" );
 		equals( e.isPropagationStopped(), false, "Verify isPropagationStopped" );
 		equals( e.isImmediatePropagationStopped(), false, "Verify isImmediatePropagationStopped" );
-		
+
 		// Skips both errors
 		e.stopImmediatePropagation();
-		
+
 		return "result";
 	});
-	
+
 	// We should add this back in when we want to test the order
 	// in which event handlers are iterated.
 	//$child.bind('foo', error );
-	
+
 	event = new jQuery.Event("foo");
 	$child.trigger( event, [1,2,3] ).unbind();
 	equals( event.result, "result", "Check event.result attribute");
-	
+
 	// Will error if it bubbles
 	$child.triggerHandler('foo');
-	
+
 	$child.unbind();
 	$parent.unbind().remove();
 });
 
 test("toggle(Function, Function, ...)", function() {
 	expect(11);
-	
+
 	var count = 0,
 		fn1 = function(e) { count++; },
 		fn2 = function(e) { count--; },
@@ -442,7 +442,7 @@ test("toggle(Function, Function, ...)", function() {
 		});
 		return false;
 	}).click().click().click();
-	
+
 	var turn = 0;
 	var fns = [
 		function(){
@@ -455,7 +455,7 @@ test("toggle(Function, Function, ...)", function() {
 			turn = 3;
 		}
 	];
-	
+
 	var $div = jQuery("<div>&nbsp;</div>").toggle( fns[0], fns[1], fns[2] );
 	$div.click();
 	equals( turn, 1, "Trying toggle with 3 functions, attempt 1 yields 1");
@@ -467,7 +467,7 @@ test("toggle(Function, Function, ...)", function() {
 	equals( turn, 1, "Trying toggle with 3 functions, attempt 4 yields 1");
 	$div.click();
 	equals( turn, 2, "Trying toggle with 3 functions, attempt 5 yields 2");
-	
+
 	$div.unbind('click',fns[0]);
 	var data = jQuery.data( $div[0], 'events' );
 	ok( !data, "Unbinding one function from toggle unbinds them all");
@@ -588,18 +588,18 @@ test(".live()/.die()", function() {
 
 	// Cleanup
 	jQuery("#nothiddendiv").die("foo", callback);
-	
+
 	// Make sure we don't loose the target by DOM modifications
 	// after the bubble already reached the liveHandler
 	var livec = 0, elemDiv = jQuery("#nothiddendivchild").html('<span></span>').get(0);
-	
+
 	jQuery("#nothiddendivchild").live("click", function(e){ jQuery("#nothiddendivchild").html(''); });
 	jQuery("#nothiddendivchild").live("click", function(e){ if(e.target) {livec++;} });
-	
+
 	jQuery("#nothiddendiv span").click();
 	equals( jQuery("#nothiddendiv span").length, 0, "Verify that first handler occurred and modified the DOM." );
 	equals( livec, 1, "Verify that second handler occurred even with nuked target." );
-	
+
 	// Cleanup
 	jQuery("#nothiddendivchild").die("click");
 });

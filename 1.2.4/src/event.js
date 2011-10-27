@@ -1,6 +1,6 @@
 /*
  * A number of helper functions used for managing events.
- * Many of the ideas behind this code orignated from 
+ * Many of the ideas behind this code orignated from
  * Dean Edwards' addEvent library.
  */
 jQuery.event = {
@@ -19,22 +19,22 @@ jQuery.event = {
 		// Make sure that the function being executed has a unique ID
 		if ( !handler.guid )
 			handler.guid = this.guid++;
-			
-		// if data is passed, bind to handler 
-		if( data != undefined ) { 
-			// Create temporary function pointer to original handler 
-			var fn = handler; 
 
-			// Create unique handler function, wrapped around original handler 
-			handler = function() { 
-				// Pass arguments and context to original handler 
-				return fn.apply(this, arguments); 
+		// if data is passed, bind to handler
+		if( data != undefined ) {
+			// Create temporary function pointer to original handler
+			var fn = handler;
+
+			// Create unique handler function, wrapped around original handler
+			handler = function() {
+				// Pass arguments and context to original handler
+				return fn.apply(this, arguments);
 			};
 
-			// Store data in unique handler 
+			// Store data in unique handler
 			handler.data = data;
 
-			// Set the guid of unique handler to the same of original handler, so it can be removed 
+			// Set the guid of unique handler to the same of original handler, so it can be removed
 			handler.guid = fn.guid;
 		}
 
@@ -48,16 +48,16 @@ jQuery.event = {
 				// an event is called after a page has unloaded
 				if ( typeof jQuery == "undefined" || jQuery.event.triggered )
 					return val;
-		
+
 				val = jQuery.event.handle.apply(arguments.callee.elem, arguments);
-		
+
 				return val;
 			});
 		// Add elem as a property of the handle function
 		// This is to prevent a memory leak with non-native
 		// event in IE.
 		handle.elem = elem;
-			
+
 			// Handle multiple events seperated by a space
 			// jQuery(...).bind("mouseover mouseout", fn);
 			jQuery.each(types.split(/\s+/), function(index, type) {
@@ -72,7 +72,7 @@ jQuery.event = {
 				// Init the event handler queue
 				if (!handlers) {
 					handlers = events[type] = {};
-		
+
 					// Check for a special event handler
 					// Only use addEventListener/attachEvent if the special
 					// events handler returns false
@@ -91,7 +91,7 @@ jQuery.event = {
 				// Keep track of which events have been used, for global triggering
 				jQuery.event.global[type] = true;
 			});
-		
+
 		// Nullify elem to prevent memory leaks in IE
 		elem = null;
 	},
@@ -118,19 +118,19 @@ jQuery.event = {
 					handler = types.handler;
 					types = types.type;
 				}
-				
+
 				// Handle multiple events seperated by a space
 				// jQuery(...).unbind("mouseover mouseout", fn);
 				jQuery.each(types.split(/\s+/), function(index, type){
 					// Namespaced event handlers
 					var parts = type.split(".");
 					type = parts[0];
-					
+
 					if ( events[type] ) {
 						// remove the given handler for the given type
 						if ( handler )
 							delete events[type][handler.guid];
-			
+
 						// remove all handlers for the given type
 						else
 							for ( handler in events[type] )
@@ -189,7 +189,7 @@ jQuery.event = {
 			var val, ret, fn = jQuery.isFunction( elem[ type ] || null ),
 				// Check to see if we need to provide a fake event, or not
 				event = !data[0] || !data[0].preventDefault;
-			
+
 			// Pass along a fake event
 			if ( event )
 				data.unshift( this.fix({ type: type, target: elem }) );
@@ -240,7 +240,7 @@ jQuery.event = {
 		var val;
 
 		// Empty object is for triggered events with no data
-		event = jQuery.event.fix( event || window.event || {} ); 
+		event = jQuery.event.fix( event || window.event || {} );
 
 		// Namespaced event handlers
 		var parts = event.type.split(".");
@@ -279,12 +279,12 @@ jQuery.event = {
 	},
 
 	fix: function(event) {
-		// store a copy of the original event object 
+		// store a copy of the original event object
 		// and clone to set read-only properties
 		var originalEvent = event;
 		event = jQuery.extend({}, originalEvent);
-		
-		// add preventDefault and stopPropagation since 
+
+		// add preventDefault and stopPropagation since
 		// they will not work on the clone
 		event.preventDefault = function() {
 			// if preventDefault exists run it on the original event
@@ -300,11 +300,11 @@ jQuery.event = {
 			// otherwise set the cancelBubble property of the original event to true (IE)
 			originalEvent.cancelBubble = true;
 		};
-		
+
 		// Fix target property, if necessary
 		if ( !event.target )
 			event.target = event.srcElement || document; // Fixes #1925 where srcElement might not be defined either
-				
+
 		// check if target is a textnode (safari)
 		if ( event.target.nodeType == 3 )
 			event.target = originalEvent.target.parentNode;
@@ -319,11 +319,11 @@ jQuery.event = {
 			event.pageX = event.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc.clientLeft || 0);
 			event.pageY = event.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc.clientTop || 0);
 		}
-			
+
 		// Add which for key events
 		if ( !event.which && ((event.charCode || event.charCode === 0) ? event.charCode : event.keyCode) )
 			event.which = event.charCode || event.keyCode;
-		
+
 		// Add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
 		if ( !event.metaKey && event.ctrlKey )
 			event.metaKey = event.ctrlKey;
@@ -332,10 +332,10 @@ jQuery.event = {
 		// Note: button is not normalized, so don't use it
 		if ( !event.which && event.button )
 			event.which = (event.button & 1 ? 1 : ( event.button & 2 ? 3 : ( event.button & 4 ? 2 : 0 ) ));
-			
+
 		return event;
 	},
-	
+
 	special: {
 		ready: {
 			setup: function() {
@@ -343,23 +343,23 @@ jQuery.event = {
 				bindReady();
 				return;
 			},
-			
+
 			teardown: function() { return; }
 		},
-		
+
 		mouseenter: {
 			setup: function() {
 				if ( jQuery.browser.msie ) return false;
 				jQuery(this).bind("mouseover", jQuery.event.special.mouseenter.handler);
 				return true;
 			},
-		
+
 			teardown: function() {
 				if ( jQuery.browser.msie ) return false;
 				jQuery(this).unbind("mouseover", jQuery.event.special.mouseenter.handler);
 				return true;
 			},
-			
+
 			handler: function(event) {
 				// If we actually just moused on to a sub-element, ignore it
 				if ( withinElement(event, this) ) return true;
@@ -368,20 +368,20 @@ jQuery.event = {
 				return jQuery.event.handle.apply(this, arguments);
 			}
 		},
-	
+
 		mouseleave: {
 			setup: function() {
 				if ( jQuery.browser.msie ) return false;
 				jQuery(this).bind("mouseout", jQuery.event.special.mouseleave.handler);
 				return true;
 			},
-		
+
 			teardown: function() {
 				if ( jQuery.browser.msie ) return false;
 				jQuery(this).unbind("mouseout", jQuery.event.special.mouseleave.handler);
 				return true;
 			},
-			
+
 			handler: function(event) {
 				// If we actually just moused on to a sub-element, ignore it
 				if ( withinElement(event, this) ) return true;
@@ -399,7 +399,7 @@ jQuery.fn.extend({
 			jQuery.event.add( this, type, fn || data, fn && data );
 		});
 	},
-	
+
 	one: function( type, data, fn ) {
 		return this.each(function(){
 			jQuery.event.add( this, type, function(event) {
@@ -434,10 +434,10 @@ jQuery.fn.extend({
 		return this.click(function(event) {
 			// Figure out which function to execute
 			this.lastToggle = 0 == this.lastToggle ? 1 : 0;
-			
+
 			// Make sure that clicks stop
 			event.preventDefault();
-			
+
 			// and execute the function
 			return args[this.lastToggle].apply( this, arguments ) || false;
 		});
@@ -446,7 +446,7 @@ jQuery.fn.extend({
 	hover: function(fnOver, fnOut) {
 		return this.bind('mouseenter', fnOver).bind('mouseleave', fnOut);
 	},
-	
+
 	ready: function(fn) {
 		// Attach the listeners
 		bindReady();
@@ -455,12 +455,12 @@ jQuery.fn.extend({
 		if ( jQuery.isReady )
 			// Execute the function immediately
 			fn.call( document, jQuery );
-			
+
 		// Otherwise, remember the function for later
 		else
 			// Add the function to the wait list
 			jQuery.readyList.push( function() { return fn.call(this, jQuery); } );
-	
+
 		return this;
 	}
 });
@@ -474,18 +474,18 @@ jQuery.extend({
 		if ( !jQuery.isReady ) {
 			// Remember that the DOM is ready
 			jQuery.isReady = true;
-			
+
 			// If there are functions bound, to execute
 			if ( jQuery.readyList ) {
 				// Execute all of them
 				jQuery.each( jQuery.readyList, function(){
 					this.apply( document );
 				});
-				
+
 				// Reset the list of functions
 				jQuery.readyList = null;
 			}
-		
+
 			// Trigger any bound ready events
 			jQuery(document).triggerHandler("ready");
 		}
@@ -502,7 +502,7 @@ function bindReady(){
 	if ( document.addEventListener && !jQuery.browser.opera)
 		// Use the handy event callback
 		document.addEventListener( "DOMContentLoaded", jQuery.ready, false );
-	
+
 	// If IE is used and is not in a frame
 	// Continually check to see if the document is ready
 	if ( jQuery.browser.msie && window == top ) (function(){
@@ -555,9 +555,9 @@ function bindReady(){
 }
 
 jQuery.each( ("blur,focus,load,resize,scroll,unload,click,dblclick," +
-	"mousedown,mouseup,mousemove,mouseover,mouseout,change,select," + 
+	"mousedown,mouseup,mousemove,mouseover,mouseout,change,select," +
 	"submit,keydown,keypress,keyup,error").split(","), function(i, name){
-	
+
 	// Handle event binding
 	jQuery.fn[name] = function(fn){
 		return fn ? this.bind(name, fn) : this.trigger(name);

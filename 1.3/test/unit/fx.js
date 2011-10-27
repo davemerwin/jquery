@@ -27,7 +27,7 @@ test("animate option (queue === false)", function () {
 		order.push(1);
 	}});
 	$foo.animate({height:'100px'}, 10, function() {
-		// queued behind the first animation so should finish third 
+		// queued behind the first animation so should finish third
 		order.push(3);
 		isSet( order, [ 1, 2, 3], "Animations finished in the correct order" );
 		start();
@@ -157,7 +157,7 @@ test("toggle()", function() {
 	ok( x.is(":hidden"), "is hidden" );
 	x.toggle();
 	ok( x.is(":visible"), "is visible again" );
-	
+
 	x.toggle(true);
 	ok( x.is(":visible"), "is visible" );
 	x.toggle(false);
@@ -187,7 +187,7 @@ test("JS Overflow and Display", function() {
 		.after("text after")
 		.animate({ opacity: 0.5 }, "slow", jQuery.checkOverflowDisplay);
 });
-		
+
 test("CSS Overflow and Display", function() {
 	expect(2);
 	stop();
@@ -259,16 +259,16 @@ jQuery.each( {
 	}, function(tn, t){
 		test(fn + " to " + tn, function() {
 			var elem = jQuery.makeTest( fn + " to " + tn );
-	
+
 			var t_w = t( elem, "width" );
 			var f_w = f( elem, "width" );
 			var t_h = t( elem, "height" );
 			var f_h = f( elem, "height" );
 			var t_o = t( elem, "opacity" );
 			var f_o = f( elem, "opacity" );
-			
+
 			var num = 0;
-			
+
 			if ( t_h == "show" ) num++;
 			if ( t_w == "show" ) num++;
 			if ( t_w == "hide"||t_w == "show" ) num++;
@@ -278,59 +278,59 @@ jQuery.each( {
 			if ( t_o.constructor == Number ) num += 2;
 			if ( t_w.constructor == Number ) num += 2;
 			if ( t_h.constructor == Number ) num +=2;
-			
+
 			expect(num);
 			stop();
-	
+
 			var anim = { width: t_w, height: t_h, opacity: t_o };
-	
+
 			elem.animate(anim, 50, function(){
 				if ( t_w == "show" )
 					equals( this.style.display, "block", "Showing, display should block: " + this.style.display);
-					
+
 				if ( t_w == "hide"||t_w == "show" )
 					equals(this.style.width.indexOf(f_w), 0, "Width must be reset to " + f_w + ": " + this.style.width);
-					
+
 				if ( t_h == "hide"||t_h == "show" )
 					equals(this.style.height.indexOf(f_h), 0, "Height must be reset to " + f_h + ": " + this.style.height);
-					
+
 				var cur_o = jQuery.attr(this.style, "opacity");
 				if ( cur_o !== "" ) cur_o = parseFloat( cur_o );
-	
+
 				if ( t_o == "hide"||t_o == "show" )
 					equals(cur_o, f_o, "Opacity must be reset to " + f_o + ": " + cur_o);
-					
+
 				if ( t_w == "hide" )
 					equals(this.style.display, "none", "Hiding, display should be none: " + this.style.display);
-					
+
 				if ( t_o.constructor == Number ) {
 					equals(cur_o, t_o, "Final opacity should be " + t_o + ": " + cur_o);
-					
+
 					ok(jQuery.curCSS(this, "opacity") != "" || cur_o == t_o, "Opacity should be explicitly set to " + t_o + ", is instead: " + cur_o);
 				}
-					
+
 				if ( t_w.constructor == Number ) {
 					equals(this.style.width, t_w + "px", "Final width should be " + t_w + ": " + this.style.width);
-					
+
 					var cur_w = jQuery.css(this,"width");
 
 					ok(this.style.width != "" || cur_w == t_w, "Width should be explicitly set to " + t_w + ", is instead: " + cur_w);
 				}
-					
+
 				if ( t_h.constructor == Number ) {
 					equals(this.style.height, t_h + "px", "Final height should be " + t_h + ": " + this.style.height);
-					
+
 					var cur_h = jQuery.css(this,"height");
 
 					ok(this.style.height != "" || cur_h == t_h, "Height should be explicitly set to " + t_h + ", is instead: " + cur_w);
 				}
-				
+
 				if ( t_h == "show" ) {
 					var old_h = jQuery.curCSS(this, "height");
 					jQuery(elem).append("<br/>Some more text<br/>and some more...");
 					ok(old_h != jQuery.css(this, "height" ), "Make sure height is auto.");
 				}
-	
+
 				start();
 			});
 		});
@@ -338,9 +338,9 @@ jQuery.each( {
 });
 
 jQuery.fn.saveState = function(){
-	var check = ['opacity','height','width','display','overflow'];	
+	var check = ['opacity','height','width','display','overflow'];
 	expect(check.length);
-	
+
 	stop();
 	return this.each(function(){
 		var self = this;

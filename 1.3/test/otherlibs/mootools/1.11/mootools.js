@@ -1395,8 +1395,8 @@ Element.extend({
 		return el;
 	}/*compatibility*/,
 
-	getElementsByClassName: function(className){ 
-		return this.getElements('.' + className); 
+	getElementsByClassName: function(className){
+		return this.getElements('.' + className);
 	}
 
 });
@@ -1527,8 +1527,8 @@ Element.Events.domready = {
 
 };
 
-window.onDomReady = function(fn){ 
-	return this.addEvent('domready', fn); 
+window.onDomReady = function(fn){
+	return this.addEvent('domready', fn);
 };
 
 window.extend({

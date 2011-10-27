@@ -48,7 +48,7 @@ test("bind(), no data", function() {
 test("bind(), iframes", function() {
 	// events don't work with iframes, see #939 - this test fails in IE because of contentDocument
 	// var doc = document.getElementById("iframe").contentDocument;
-	// 
+	//
 	// doc.body.innerHTML = "<input type='text'/>";
 	//
 	// var input = doc.getElementsByTagName("input")[0];
@@ -120,11 +120,11 @@ test("click()", function() {
 		ok( !close[0], "Context element does not exist, direct access to element must return undefined" );
 		return false;
 	}).click();
-	
+
 	$("#check1").click(function() {
 		ok( true, "click event handler for checkbox gets fired twice, see #815" );
 	}).click();
-	
+
 	var counter = 0;
 	$('#firstp')[0].onclick = function(event) {
 		counter++;
@@ -144,7 +144,7 @@ test("unbind(event)", function() {
 		ok( true, "Fake onebind" );
 	});
 	el.click().click();
-	
+
 	el.click(function() { return; });
 	el.unbind('click');
 	ok( !el[0].onclick, "Handler is removed" ); // Bug #964
@@ -156,7 +156,7 @@ test("unbind(event)", function() {
 
 	el.unbind('click');
 	ok( !jQuery.data(el[0], "events"), "Removed the events expando after all handlers are unbound." );
-	
+
 	reset();
 	var clickCounter = mouseoverCounter = 0;
 	var handler = function(event) {
@@ -244,7 +244,7 @@ test("trigger(event, [data], [fn])", function() {
 	// Triggers 9
 	eventObj = jQuery.event.fix({ type: "foo", target: document.body });
 	equals( $("#firstp").triggerHandler("click", [eventObj, 1, "2", "abc"], handler), "test", "Verify handler response" );
-	
+
 	var pass = true;
 	try {
 		$('input:first')
