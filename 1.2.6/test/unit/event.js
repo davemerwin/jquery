@@ -48,7 +48,7 @@ test("bind(), no data", function() {
 test("bind(), iframes", function() {
 	// events don't work with iframes, see #939 - this test fails in IE because of contentDocument
 	// var doc = document.getElementById("iframe").contentDocument;
-	// 
+	//
 	// doc.body.innerHTML = "<input type='text'/>";
 	//
 	// var input = doc.getElementsByTagName("input")[0];
@@ -120,25 +120,25 @@ test("trigger() shortcuts", function() {
 		ok( !close[0], "Context element does not exist, direct access to element must return undefined" );
 		return false;
 	}).click();
-	
+
 	$("#check1").click(function() {
 		ok( true, "click event handler for checkbox gets fired twice, see #815" );
 	}).click();
-	
+
 	var counter = 0;
 	$('#firstp')[0].onclick = function(event) {
 		counter++;
 	};
 	$('#firstp').click();
 	equals( counter, 1, "Check that click, triggers onclick event handler also" );
-	
+
 	var clickCounter = 0;
 	$('#simon1')[0].onclick = function(event) {
 		clickCounter++;
 	};
 	$('#simon1').click();
 	equals( clickCounter, 1, "Check that click, triggers onclick event handler on an a tag also" );
-	
+
 	$('<img />').load(function(){
 		ok( true, "Trigger the load event, using the shortcut .load() (#2819)");
 	}).load();
@@ -155,7 +155,7 @@ test("unbind(event)", function() {
 		ok( true, "Fake onebind" );
 	});
 	el.click().click();
-	
+
 	el.click(function() { return; });
 	el.unbind('click');
 	ok( !el[0].onclick, "Handler is removed" ); // Bug #964
@@ -167,7 +167,7 @@ test("unbind(event)", function() {
 
 	el.unbind('click');
 	ok( !jQuery.data(el[0], "events"), "Removed the events expando after all handlers are unbound." );
-	
+
 	reset();
 	var clickCounter = (mouseoverCounter = 0);
 	var handler = function(event) {
@@ -255,7 +255,7 @@ test("trigger(event, [data], [fn])", function() {
 	// Triggers 9
 	eventObj = jQuery.event.fix({ type: "foo", target: document.body });
 	equals( $("#firstp").triggerHandler("click", [eventObj, 1, "2", "abc"], handler), "test", "Verify handler response" );
-	
+
 	var pass = true;
 	try {
 		$('input:first')
@@ -277,7 +277,7 @@ test("trigger(event, [data], [fn])", function() {
 
 test("toggle(Function, Function, ...)", function() {
 	expect(11);
-	
+
 	var count = 0,
 		fn1 = function(e) { count++; },
 		fn2 = function(e) { count--; },
@@ -300,7 +300,7 @@ test("toggle(Function, Function, ...)", function() {
 		});
 		return false;
 	}).click().click().click();
-	
+
 	var turn = 0;
 	var fns = [
 		function(){
@@ -313,7 +313,7 @@ test("toggle(Function, Function, ...)", function() {
 			turn = 3;
 		}
 	];
-	
+
 	var $div = $("<div>&nbsp;</div>").toggle( fns[0], fns[1], fns[2] );
 	$div.click();
 	equals( turn, 1, "Trying toggle with 3 functions, attempt 1 yields 1");
@@ -325,7 +325,7 @@ test("toggle(Function, Function, ...)", function() {
 	equals( turn, 1, "Trying toggle with 3 functions, attempt 4 yields 1");
 	$div.click();
 	equals( turn, 2, "Trying toggle with 3 functions, attempt 5 yields 2");
-	
+
 	$div.unbind('click',fns[0]);
 	var data = $.data( $div[0], 'events' );
 	ok( !data, "Unbinding one function from toggle unbinds them all");

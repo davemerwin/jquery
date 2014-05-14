@@ -464,7 +464,7 @@ $.ui.mouse = {
 		// however, in Safari, this causes select boxes not to be selectable
 		// anymore, so this fix is needed
 		($.browser.safari || event.preventDefault());
-		
+
 		return true;
 	},
 
@@ -674,7 +674,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 		var dropped = false;
 		if ($.ui.ddmanager && !this.options.dropBehaviour)
 			dropped = $.ui.ddmanager.drop(this, event);
-		
+
 		//if a drop comes from outside (a sortable)
 		if(this.dropped) {
 			dropped = this.dropped;
@@ -736,7 +736,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 		//Get the offsetParent and cache its position
 		this.offsetParent = this.helper.offsetParent();
 		var po = this.offsetParent.offset();
-		
+
 		// This is a special case where we need to modify a offset calculated on start, since the following happened:
 		// 1. The position of the helper is absolute, so it's position is calculated based on the next positioned parent
 		// 2. The actual offset parent is a child of the scroll parent, and the scroll parent isn't the document, which means that
@@ -831,7 +831,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 				- ( this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ) * mod
 			)
 		};
-		
+
 	},
 
 	_generatePosition: function(event) {
@@ -845,7 +845,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 		if(this.cssPosition == 'relative' && !(this.scrollParent[0] != document && this.scrollParent[0] != this.offsetParent[0])) {
 			this.offset.relative = this._getRelativeOffset();
 		}
-		
+
 		var pageX = event.pageX;
 		var pageY = event.pageY;
 
@@ -853,7 +853,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 		 * - Position constraining -
 		 * Constrain the position to a mix of grid, containment.
 		 */
-		 
+
 		if(this.originalPosition) { //If we are not dragging yet, we won't check for options
 
 			if(this.containment) {
@@ -862,7 +862,7 @@ $.widget("ui.draggable", $.extend({}, $.ui.mouse, {
 				if(event.pageX - this.offset.click.left > this.containment[2]) pageX = this.containment[2] + this.offset.click.left;
 				if(event.pageY - this.offset.click.top > this.containment[3]) pageY = this.containment[3] + this.offset.click.top;
 			}
-			
+
 			if(o.grid) {
 				var top = this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1];
 				pageY = this.containment ? (!(top - this.offset.click.top < this.containment[1] || top - this.offset.click.top > this.containment[3]) ? top : (!(top - this.offset.click.top < this.containment[1]) ? top - o.grid[1] : top + o.grid[1])) : top;
@@ -985,15 +985,15 @@ $.ui.plugin.add("draggable", "connectToSortable", {
 
 		$.each(inst.sortables, function() {
 			if(this.instance.isOver) {
-				
+
 				this.instance.isOver = 0;
-				
+
 				inst.cancelHelperRemoval = true; //Don't remove the helper in the draggable instance
 				this.instance.cancelHelperRemoval = false; //Remove it in the sortable instance (so sortable plugins like revert still work)
-				
+
 				//The sortable revert is supported, and we have to set a temporary dropped variable on the draggable to support revert: 'valid/invalid'
 				if(this.shouldRevert) this.instance.options.revert = true;
-				
+
 				//Trigger the stop of the sortable
 				this.instance._mouseStop(event);
 
@@ -2103,7 +2103,7 @@ $.widget("ui.resizable", $.extend({}, $.ui.mouse, {
 
 	_propagate: function(n, event) {
 		$.ui.plugin.call(this, n, [event, this.ui()]);
-		
+
 		(n != "resize" && this._trigger(n, event, this.ui()));
 	},
 
@@ -3237,11 +3237,11 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 					return el;
 				},
 				update: function(container, p) {
-					
+
 					// 1. If a className is set as 'placeholder option, we don't force sizes - the class is responsible for that
 					// 2. The option 'forcePlaceholderSize can be enabled to force it even if a class name is specified
 					if(className && !o.forcePlaceholderSize) return;
-					
+
 					//If the element doesn't have a actual height by itself (without styles coming from a stylesheet), it receives the inline height from the dragged item
 					if(!p.height()) { p.height(self.currentItem.innerHeight() - parseInt(self.currentItem.css('paddingTop')||0, 10) - parseInt(self.currentItem.css('paddingBottom')||0, 10)); };
 					if(!p.width()) { p.width(self.currentItem.innerWidth() - parseInt(self.currentItem.css('paddingLeft')||0, 10) - parseInt(self.currentItem.css('paddingRight')||0, 10)); };
@@ -3335,7 +3335,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 		//Get the offsetParent and cache its position
 		this.offsetParent = this.helper.offsetParent();
 		var po = this.offsetParent.offset();
-		
+
 		// This is a special case where we need to modify a offset calculated on start, since the following happened:
 		// 1. The position of the helper is absolute, so it's position is calculated based on the next positioned parent
 		// 2. The actual offset parent is a child of the scroll parent, and the scroll parent isn't the document, which means that
@@ -3430,7 +3430,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 				- ( this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ) * mod
 			)
 		};
-		
+
 	},
 
 	_generatePosition: function(event) {
@@ -3444,7 +3444,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 		if(this.cssPosition == 'relative' && !(this.scrollParent[0] != document && this.scrollParent[0] != this.offsetParent[0])) {
 			this.offset.relative = this._getRelativeOffset();
 		}
-		
+
 		var pageX = event.pageX;
 		var pageY = event.pageY;
 
@@ -3452,7 +3452,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 		 * - Position constraining -
 		 * Constrain the position to a mix of grid, containment.
 		 */
-		 
+
 		if(this.originalPosition) { //If we are not dragging yet, we won't check for options
 
 			if(this.containment) {
@@ -3461,7 +3461,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 				if(event.pageX - this.offset.click.left > this.containment[2]) pageX = this.containment[2] + this.offset.click.left;
 				if(event.pageY - this.offset.click.top > this.containment[3]) pageY = this.containment[3] + this.offset.click.top;
 			}
-			
+
 			if(o.grid) {
 				var top = this.originalPageY + Math.round((pageY - this.originalPageY) / o.grid[1]) * o.grid[1];
 				pageY = this.containment ? (!(top - this.offset.click.top < this.containment[1] || top - this.offset.click.top > this.containment[3]) ? top : (!(top - this.offset.click.top < this.containment[1]) ? top - o.grid[1] : top + o.grid[1])) : top;
@@ -3488,7 +3488,7 @@ $.widget("ui.sortable", $.extend({}, $.ui.mouse, {
 				+ ( this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() )
 			)
 		};
-		
+
 	},
 
 	_rearrange: function(event, i, a, hardRefresh) {
@@ -4781,7 +4781,7 @@ $.widget("ui.slider", $.extend({}, $.ui.mouse, {
 		this.range = $([]);
 
 		if (o.range) {
-			
+
 			if (o.range === true) {
 				this.range = $('<div></div>');
 				if (!o.values) o.values = [this._valueMin(), this._valueMin()];
@@ -4801,7 +4801,7 @@ $.widget("ui.slider", $.extend({}, $.ui.mouse, {
 			(o.range == "max") && (this.orientation == "horizontal") && this.range.css({ right : 0 });
 			(o.range == "min") && (this.orientation == "vertical") && this.range.css({ bottom : 0 });
 			(o.range == "max") && (this.orientation == "vertical") && this.range.css({ top : 0 });
-			
+
 		}
 
 		if ($(".ui-slider-handle", this.element).length == 0)
@@ -4960,25 +4960,25 @@ $.widget("ui.slider", $.extend({}, $.ui.mouse, {
 	},
 
 	_mouseDrag: function(event) {
-		
+
 		var position = { x: event.pageX, y: event.pageY };
 		var normValue = this._normValueFromMouse(position);
 
 		this._slide(event, this._handleIndex, normValue);
 
 		return false;
-		
+
 	},
 
 	_mouseStop: function(event) {
-		
+
 		this.handles.removeClass("ui-state-active");
 		this._stop(event);
 		this._change(event);
 		this._handleIndex = null;
 
 		return false;
-		
+
 	},
 
 	_normValueFromMouse: function(position) {
@@ -5007,7 +5007,7 @@ $.widget("ui.slider", $.extend({}, $.ui.mouse, {
 			normValue += this.options.step;
 
 		return normValue;
-		
+
 	},
 
 	_start: function(event) {
@@ -5017,7 +5017,7 @@ $.widget("ui.slider", $.extend({}, $.ui.mouse, {
 	},
 
 	_slide: function(event, index, newVal) {
-		
+
 		if (this.options.values && this.options.values.length) {
 
 			var handle = this.handles[index];
@@ -5381,11 +5381,11 @@ $.widget("ui.tabs", {
 				// just trigger show event
 				else onShow();
 			}
-			
+
 			// states
 			var handleState = function(state, el) {
 			    if (el.is(':not(.' + o.disabledClass + ')')) el.toggleClass('ui-state-' + state);
-			};		
+			};
 			this.$lis.bind('mouseover.tabs mouseout.tabs', function() {
 			    handleState('hover', $(this));
 			});
@@ -5546,7 +5546,7 @@ $.widget("ui.tabs", {
 			return false;
 
 		});
-		
+
 		// disable click if event is configured to something else
 		if (o.event != 'click') this.$tabs.bind('click.tabs', function(){return false;});
 
@@ -6419,26 +6419,26 @@ $.extend(Datepicker.prototype, {
 		if (inst.input && inst.input[0].type != 'hidden' && inst == $.datepicker._curInst)
 			$(inst.input[0]).focus();
 	},
-	
+
 	/* Check positioning to remain on screen. */
-	_checkOffset: function(inst, offset, isFixed) {		
+	_checkOffset: function(inst, offset, isFixed) {
 		var dpWidth = inst.dpDiv.outerWidth();
 		var dpHeight = inst.dpDiv.outerHeight();
 		var inputWidth = inst.input ? inst.input.outerWidth() : 0;
 		var inputHeight = inst.input ? inst.input.outerHeight() : 0;
 		var viewWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 		var viewHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-		
+
 		offset.left -= (this._get(inst, 'isRTL') ? (dpWidth - inputWidth) : 0);
 		offset.left -= (isFixed && offset.left == inst.input.offset().left) ? $(document).scrollLeft() : 0;
 		offset.top -= (isFixed && offset.top == (inst.input.offset().top + inputHeight)) ? $(document).scrollTop() : 0;
-		
+
 		// now check if datepicker is showing outside window viewpoint - move to a better place if so.
 		offset.left -= (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ? Math.abs(offset.left + dpWidth - viewWidth) : 0;
 		offset.top -= (offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ? Math.abs(offset.top + dpHeight + inputHeight*2 - viewHeight) : 0;
-				
+
 		return offset;
-	},	
+	},
 
 	/* Find an object's position on the screen. */
 	_findPos: function(obj) {
@@ -7555,26 +7555,26 @@ $.effects = $.effects || {}; //Add the 'effects' scope
 
 $.extend($.effects, {
 	version: "1.6rc5",
-	
+
 	// Saves a set of properties in a data storage
 	save: function(element, set) {
 		for(var i=0; i < set.length; i++) {
 			if(set[i] !== null) element.data("ec.storage."+set[i], element[0].style[set[i]]);
 		}
 	},
-	
+
 	// Restores a set of previously saved properties from a data storage
 	restore: function(element, set) {
 		for(var i=0; i < set.length; i++) {
 			if(set[i] !== null) element.css(set[i], element.data("ec.storage."+set[i]));
 		}
 	},
-	
+
 	setMode: function(el, mode) {
 		if (mode == 'toggle') mode = el.is(':hidden') ? 'show' : 'hide'; // Set for toggle
 		return mode;
 	},
-	
+
 	getBaseline: function(origin, original) { // Translates a [top,left] array into a baseline value
 		// this should be a little more flexible in the future to handle a string & hash
 		var y, x;
@@ -7592,7 +7592,7 @@ $.extend($.effects, {
 		};
 		return {x: x, y: y};
 	},
-	
+
 	// Wraps the element around a wrapper that copies position properties
 	createWrapper: function(element) {
 
@@ -7676,7 +7676,7 @@ $.extend($.effects, {
 
 //Extend the methods of jQuery
 $.fn.extend({
-	
+
 	//Save old methods
 	_show: $.fn.show,
 	_hide: $.fn.hide,
@@ -7684,12 +7684,12 @@ $.fn.extend({
 	_addClass: $.fn.addClass,
 	_removeClass: $.fn.removeClass,
 	_toggleClass: $.fn.toggleClass,
-	
+
 	// New effect methods
 	effect: function(fx, options, speed, callback) {
 		return $.effects[fx] ? $.effects[fx].call(this, {method: fx, options: options || {}, duration: speed, callback: callback }) : null;
 	},
-	
+
 	show: function() {
 		if(!arguments[0] || (arguments[0].constructor == Number || (/(slow|normal|fast)/).test(arguments[0])))
 			return this._show.apply(this, arguments);
@@ -7698,7 +7698,7 @@ $.fn.extend({
 			return this.effect.apply(this, [arguments[0], o, arguments[2] || o.duration, arguments[3] || o.callback]);
 		}
 	},
-	
+
 	hide: function() {
 		if(!arguments[0] || (arguments[0].constructor == Number || (/(slow|normal|fast)/).test(arguments[0])))
 			return this._hide.apply(this, arguments);
@@ -7707,7 +7707,7 @@ $.fn.extend({
 			return this.effect.apply(this, [arguments[0], o, arguments[2] || o.duration, arguments[3] || o.callback]);
 		}
 	},
-	
+
 	toggle: function(){
 		if(!arguments[0] || (arguments[0].constructor == Number || (/(slow|normal|fast)/).test(arguments[0])) || (arguments[0].constructor == Function))
 			return this.__toggle.apply(this, arguments);
@@ -7716,7 +7716,7 @@ $.fn.extend({
 			return this.effect.apply(this, [arguments[0], o, arguments[2] || o.duration, arguments[3] || o.callback]);
 		}
 	},
-	
+
 	addClass: function(classNames, speed, easing, callback) {
 		return speed ? $.effects.animateClass.apply(this, [{ add: classNames },speed,easing,callback]) : this._addClass(classNames);
 	},
@@ -7732,7 +7732,7 @@ $.fn.extend({
 	switchClass: function() {
 		return this.morph.apply(this, arguments);
 	},
-	
+
 	// helper functions
 	cssUnit: function(key) {
 		var style = this.css(key), val = [];
@@ -8515,7 +8515,7 @@ $.effects.pulsate = function(o) {
 		var mode = $.effects.setMode(el, o.options.mode || 'show'); // Set Mode
 		var times = o.options.times || 5; // Default # of times
 		var duration = o.duration ? o.duration / 2 : $.fx.speeds._default / 2;
-		
+
 		// Adjust
 		if (mode == 'hide') times--;
 		if (el.is(':hidden')) { // Show fadeIn
